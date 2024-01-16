@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const Blog = require('../models/blog')
 
 const blogsRouter = require('express').Router()
