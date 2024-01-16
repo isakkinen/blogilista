@@ -17,9 +17,21 @@ const mostBlogs = (blogs) => blogs.reduce((bloggers, blog) => {
     return bloggers
 }, {}).mostBlogs || null
 
+const mostLikes = (blogs) => blogs.reduce((bloggers, blog) => {
+    bloggers[blog.author] = {
+        author: blog.author,
+        likes: bloggers[blog.author] === undefined ? blog.likes : bloggers[blog.author].likes + blog.likes
+    }
+    bloggers.mostLikes = bloggers.mostLikes === undefined || bloggers[blog.author].likes > bloggers.mostLikes.likes
+        ? bloggers[blog.author]
+        : bloggers.mostLikes
+    return bloggers
+}, {}).mostLikes || null
+
 module.exports = {
     dummy,
     totalLikes,
     favoriteBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes
 }
