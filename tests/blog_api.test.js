@@ -37,6 +37,19 @@ describe('blog api tests', () => {
         expect(result.type).toBe('application/json')
     })
 
+    test('blogs have id property', async () => {
+        const result = await api.get('/api/blogs')
+
+        expect(result.body[0].id).toBeDefined()
+    })
+
+    test('a valid blog can be added', async () => {
+        const newBlog = initialBlogs[0]
+        await api.post('/api/blogs').send(newBlog).expect(201).expect('Content-Type', /application\/json/)
+        const result = await api.get('/api/blogs')
+        expect(result.body).toHaveLength(initialBlogs.length + 1)
+    })
+
     afterAll(async () => {
         await mongoose.connection.close().then(() => {
             console.log('Connection closed')
