@@ -8,9 +8,9 @@ const blogsRouter = require('./controllers/blogs')
 const logger = require('./utils/logger')
 
 mongoose.connect(config.MONGODB_URI).then(() => {
-  logger.info('connected to MongoDB')
+    logger.info('connected to MongoDB')
 }).catch((error) => {
-  logger.error('error connecting to MongoDB:', error.message)
+    logger.error('error connecting to MongoDB:', error.message)
 })
 
 app.use(cors())
@@ -21,5 +21,5 @@ app.use(middleware.errorHandler)
 
 const PORT = config.PORT
 app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`)
+    logger.info(`Server running on port ${PORT}`)
 })
