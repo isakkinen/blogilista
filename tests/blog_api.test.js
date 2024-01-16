@@ -50,6 +50,26 @@ describe('blog api tests', () => {
         expect(result.body).toHaveLength(initialBlogs.length + 1)
     })
 
+    test('blogs can be removed', async () => {
+        const result = await api.get('/api/blogs')
+        const id = result.body[0].id
+        await api.delete(`/api/blogs/${id}`).expect(204)
+        const result2 = await api.get('/api/blogs')
+        expect(result2.body).toHaveLength(initialBlogs.length - 1)
+    })
+
+    test('blogs can be updated', async () => {
+        const result = await api.get('/api/blogs')
+        const id = result.body[0].id
+        const newBlog = {
+            ...result.body[0],
+            title: 'React patterns'
+        }
+        await api.put(`/api/blogs/${id}`).send(newBlog).expect(200)
+        const result2 = await api.get('/api/blogs')
+        expect(result2.body[0].title).toBe('React patterns')
+    })
+
     afterAll(async () => {
         await mongoose.connection.close().then(() => {
             console.log('Connection closed')
